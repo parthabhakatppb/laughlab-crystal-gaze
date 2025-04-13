@@ -27,21 +27,33 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Apply the theme class to the root element
   useEffect(() => {
     const root = document.documentElement;
-    const previousTheme = localStorage.getItem("laughlab-theme");
-
-    // Remove previous theme class if it exists
-    if (previousTheme) {
-      root.classList.remove(`theme-${previousTheme}`);
-    }
+    
+    // Remove all theme classes first
+    const themeClasses = [
+      "theme-calm-blue",
+      "theme-midnight-noir",
+      "theme-retro-terminal",
+      "theme-futuristic-neon",
+      "theme-forest-green",
+      "theme-soft-pastels",
+      "theme-minimal-light"
+    ];
+    
+    themeClasses.forEach(themeClass => {
+      root.classList.remove(themeClass);
+    });
     
     // Add the new theme class
     root.classList.add(`theme-${theme}`);
     
     // Save to localStorage
     localStorage.setItem("laughlab-theme", theme);
+    
+    console.log(`Theme changed to: theme-${theme}`);
   }, [theme]);
 
   const changeTheme = (newTheme: Theme) => {
+    console.log(`Changing theme to: ${newTheme}`);
     setTheme(newTheme);
   };
 

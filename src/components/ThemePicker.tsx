@@ -1,8 +1,9 @@
 
 import { useTheme } from "../context/ThemeContext";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Paintbrush } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface ThemeOption {
   id: string;
@@ -13,6 +14,7 @@ interface ThemeOption {
 
 export function ThemePicker() {
   const { theme, changeTheme } = useTheme();
+  const { toast } = useToast();
   
   const themeOptions: ThemeOption[] = [
     {
@@ -59,6 +61,14 @@ export function ThemePicker() {
     }
   ];
   
+  const handleThemeChange = (themeId: string) => {
+    changeTheme(themeId as any);
+    toast({
+      title: "Theme updated",
+      description: `Theme changed to ${themeOptions.find(option => option.id === themeId)?.name}`,
+    });
+  };
+  
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -69,6 +79,9 @@ export function ThemePicker() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Choose Theme</DialogTitle>
+          <DialogDescription>
+            Select a theme to personalize your experience
+          </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 py-4">
           {themeOptions.map((option) => (
@@ -77,7 +90,7 @@ export function ThemePicker() {
               className={`p-4 rounded-lg ${option.bgColor} ${option.textColor} 
                          transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary
                          ${theme === option.id ? 'ring-2 ring-primary' : ''}`}
-              onClick={() => changeTheme(option.id as any)}
+              onClick={() => handleThemeChange(option.id)}
             >
               <div className="text-center">
                 <div className="font-medium">{option.name}</div>
