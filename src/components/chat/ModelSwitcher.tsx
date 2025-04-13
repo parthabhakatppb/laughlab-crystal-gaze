@@ -3,7 +3,7 @@ import { useModel, ModelType } from "../../context/ModelContext";
 import { useChat } from "../../context/ChatContext";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MicVocal, Theatre, Sparkles } from "lucide-react";
+import { MicVocal, Theater, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const getModelIcon = (iconName: string) => {
@@ -11,7 +11,7 @@ const getModelIcon = (iconName: string) => {
     case "MicVocal":
       return <MicVocal className="h-5 w-5" />;
     case "TheatreIcon":
-      return <Theatre className="h-5 w-5" />;
+      return <Theater className="h-5 w-5" />;
     case "Sparkles":
       return <Sparkles className="h-5 w-5" />;
     default:
