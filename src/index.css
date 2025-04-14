@@ -230,22 +230,167 @@
   border-color: rgba(138, 43, 226, 0.5);
 }
 
-/* Scrollbar styling */
+/* Enhanced scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(138, 43, 226, 0.05);
-  border-radius: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(138, 43, 226, 0.2);
-  border-radius: 4px;
+  background-color: hsl(var(--muted));
+  border: 3px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box;
+  transition: background-color 0.2s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(138, 43, 226, 0.4);
+  background-color: hsl(var(--muted-foreground));
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 8px;
+}
+
+/* Ensure smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-y: auto;
+}
+
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Make all scrollable elements have visible scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) transparent;
+}
+
+*:hover {
+  scrollbar-color: hsl(var(--muted-foreground)) transparent;
+}
+
+/* Add scrollbars to common scrollable elements */
+.scrollable {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  position: relative;
+}
+
+/* Ensure scrollbars are always visible on touch devices */
+@media (hover: none) {
+  ::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground));
+  }
+}
+
+/* Scroll to top button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+}
+
+.scroll-to-top:hover {
+  background-color: hsl(var(--primary-foreground));
+  color: hsl(var(--primary));
+}
+
+/* Add scrollbar to specific components */
+.overflow-container {
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-right: 8px; /* Prevent content shift when scrollbar appears */
+}
+
+/* Ensure consistent scrollbar presence */
+.always-scroll {
+  overflow-y: scroll;
+}
+
+/* Prevent horizontal scrollbar unless needed */
+.no-horizontal-scroll {
+  overflow-x: hidden;
+}
+
+.animate-rotate {
+  animation: rotate 20s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.sparkle {
+  @apply absolute bg-white rounded-full;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Input styling */
+.input-glow:focus {
+  box-shadow: 0 0 15px 2px rgba(138, 43, 226, 0.3);
+  border-color: rgba(138, 43, 226, 0.5);
+}
+
+/* Model background colors from CSS variables */
+.bg-model1 {
+  background-color: hsl(var(--model1));
+}
+
+.bg-model2 {
+  background-color: hsl(var(--model2));
+}
+
+.bg-model3 {
+  background-color: hsl(var(--model3));
+}
+
+/* Hover effects for interactive elements */
+.hover-glow {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px 5px rgba(138, 43, 226, 0.3);
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-border {
+  transition: border-color 0.3s ease-in-out;
+}
+
+.hover-border:hover {
+  border-color: rgba(138, 43, 226, 0.5);
 }
