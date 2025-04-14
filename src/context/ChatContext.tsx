@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { ModelType } from "./ModelContext";
 import { generateFortune } from "../utils/fortuneTeller";
@@ -40,22 +41,28 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const savedChats = localStorage.getItem("laughlab-chats");
     if (savedChats) {
-      const parsedChats = JSON.parse(savedChats);
-      // Convert date strings back to Date objects
-      const formattedChats = parsedChats.map((chat: any) => ({
-        ...chat,
-        createdAt: new Date(chat.createdAt),
-        updatedAt: new Date(chat.updatedAt),
-        messages: chat.messages.map((msg: any) => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp)
-        }))
-      }));
-      setChats(formattedChats);
-      
-      // Set the most recent chat as current
-      if (formattedChats.length > 0) {
-        setCurrentChat(formattedChats[0]);
+      try {
+        const parsedChats = JSON.parse(savedChats);
+        // Convert date strings back to Date objects
+        const formattedChats = parsedChats.map((chat: any) => ({
+          ...chat,
+          createdAt: new Date(chat.createdAt),
+          updatedAt: new Date(chat.updatedAt),
+          messages: chat.messages.map((msg: any) => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp)
+          }))
+        }));
+        setChats(formattedChats);
+        
+        // Set the most recent chat as current
+        if (formattedChats.length > 0) {
+          setCurrentChat(formattedChats[0]);
+        }
+      } catch (error) {
+        console.error("Error parsing saved chats:", error);
+        // If there's an error parsing, start with empty chats
+        setChats([]);
       }
     }
   }, []);
@@ -119,7 +126,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     
     setCurrentChat(updatedChat);
     
-    // If this is a user message, simulate an AI response
+    // If this is a user message, generate an AI response
     if (role === "user") {
       setIsLoading(true);
       
@@ -127,7 +134,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 1500));
         
-        // Mock responses based on model
+        // Generate response based on model
         let responseContent = "";
         
         if (model === "model1") {
@@ -135,12 +142,25 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         } else if (model === "model2") {
           responseContent = "Yes, and... let's add a surprise twist! How about the character suddenly reveals they've been a ghost all along?";
         } else if (model === "model3") {
-          // Enhanced mystical fortune response - now using our fortune generator
+          // Enhanced mystical fortune response
+          const messageContent = content.toLowerCase();
+          
+          // Extract any zodiac sign mentioned in the message
+          const zodiacSigns = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", 
+                              "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+          const mentionedSign = zodiacSigns.find(sign => messageContent.includes(sign)) || "";
+          
+          // Check if the message mentions karma reset
+          const karmaReset = messageContent.includes("karma") || 
+                             messageContent.includes("wholesome") || 
+                             messageContent.includes("positive");
+          
+          // Generate a fortune
           responseContent = generateFortune(
-            "", // Let it pick a random sign if not specified in the message
+            mentionedSign, // Use sign mentioned in message or random if not specified
             null, 
-            "",
-            Math.random() > 0.9 // Occasionally give wholesome responses
+            messageContent.includes("music") ? "energetic party vibes" : "",
+            karmaReset || Math.random() > 0.9 // Occasionally give wholesome responses
           );
         }
         
@@ -166,6 +186,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         );
         
         setCurrentChat(chatWithResponse);
+      } catch (error) {
+        console.error("Error generating response:", error);
+        // Handle error if needed
       } finally {
         setIsLoading(false);
       }

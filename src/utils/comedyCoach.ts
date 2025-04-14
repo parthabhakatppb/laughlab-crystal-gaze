@@ -1,42 +1,33 @@
 
 import { toast } from "@/hooks/use-toast";
 
-// Mock API keys - in a real app these would be secured via environment variables or Supabase secrets
-const OPENAI_API_KEY = "your-openai-api-key";
-
 /**
- * Generate a joke using OpenAI's API
+ * Generate a joke using a mock implementation
+ * (In a production app, this would use a real API with a proper API key)
  */
 export const generateJoke = async (interests: string): Promise<string> => {
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are a stand-up comedian." },
-          { role: "user", content: `Write a stand-up comedy joke about ${interests}.` }
-        ],
-        max_tokens: 200,
-        temperature: 0.7
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content.trim();
+    // Mock API call - in a real app, you would use a proper API key
+    console.log(`Generating joke about: ${interests}`);
+    
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Return a mock joke based on interests
+    const jokes = [
+      `Why don't ${interests} enthusiasts ever get lost? Because they always take the "right" path!`,
+      `I tried to start a ${interests} club, but there was too much drama. It was like a soap opera, but with more ${interests}.`,
+      `My friend is so obsessed with ${interests} that they named their dog "Browser History" - something they desperately want to keep private.`,
+      `${interests} is like a refrigerator: when you're not sure what you want, you stand in front of it with the door open and stare.`,
+      `I'm not saying ${interests} is boring, but I've seen more excitement in a documentary about paint drying.`
+    ];
+    
+    return jokes[Math.floor(Math.random() * jokes.length)];
   } catch (error) {
     console.error("Error generating joke:", error);
     toast({
       title: "Joke Generation Failed",
-      description: "Could not connect to the comedy service. Please try again.",
+      description: "Could not generate a joke. Please try again.",
       variant: "destructive"
     });
     return "Sorry, I couldn't think of a joke right now. My comedy brain needs a coffee break!";
@@ -45,10 +36,9 @@ export const generateJoke = async (interests: string): Promise<string> => {
 
 /**
  * Mock function for analyzing voice emotion
- * In a real implementation, this would connect to Deepgram
  */
 export const analyzeVoiceEmotion = async (audioBlob: Blob): Promise<string> => {
-  // This is a placeholder - in a real implementation we'd send the audio to Deepgram
+  // This is a placeholder - in a real implementation we'd send the audio to a voice analysis API
   console.log("Analyzing voice emotion for audio blob:", audioBlob);
   
   // Simulate API delay
@@ -61,7 +51,6 @@ export const analyzeVoiceEmotion = async (audioBlob: Blob): Promise<string> => {
 
 /**
  * Mock function for laughter detection
- * In a real implementation, this would use librosa and MFCC
  */
 export const detectLaughter = async (audioBlob: Blob): Promise<boolean> => {
   // This is a placeholder - in a real implementation we'd analyze the audio 

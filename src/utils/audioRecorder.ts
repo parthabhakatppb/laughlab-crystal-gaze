@@ -1,4 +1,3 @@
-
 export class AudioRecorder {
   private mediaRecorder: MediaRecorder | null = null;
   private audioChunks: Blob[] = [];
@@ -7,6 +6,15 @@ export class AudioRecorder {
   async startRecording(): Promise<void> {
     try {
       this.audioChunks = [];
+      
+      // Check if user has already denied permissions
+      if (navigator.permissions) {
+        const permissionStatus = await navigator.permissions.query({ name: 'microphone' as PermissionName });
+        if (permissionStatus.state === 'denied') {
+          throw new Error("Microphone access was previously denied. Please enable it in your browser settings.");
+        }
+      }
+      
       this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this.mediaRecorder = new MediaRecorder(this.stream);
       
@@ -20,7 +28,14 @@ export class AudioRecorder {
       console.log("Recording started");
     } catch (error) {
       console.error("Error starting recording:", error);
-      throw new Error("Could not access microphone. Please check your permissions.");
+      
+      // Check for specific permission errors
+      if (error instanceof DOMException && 
+          (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError')) {
+        throw new Error("Microphone access denied. Please allow microphone access in your browser settings.");
+      }
+      
+      throw new Error("Could not access microphone. Please check your permissions and try again.");
     }
   }
 
@@ -52,6 +67,17 @@ export class AudioRecorder {
 
   isRecording(): boolean {
     return this.mediaRecorder !== null && this.mediaRecorder.state === 'recording';
+  }
+
+  // Add a method to simulate recording for demo purposes
+  async simulateRecording(): Promise<Blob> {
+    console.log("Simulating recording");
+    // Wait for 3 seconds to simulate recording
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Create an empty audio blob
+    const emptyBlob = new Blob([], { type: 'audio/wav' });
+    return emptyBlob;
   }
 }
 

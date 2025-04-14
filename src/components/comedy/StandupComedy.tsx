@@ -18,6 +18,7 @@ export function StandupComedy() {
   const [feedback, setFeedback] = useState("");
   const [step, setStep] = useState<"input" | "joke" | "recording" | "feedback">("input");
   const [isLoading, setIsLoading] = useState(false);
+  const [useSimulation, setUseSimulation] = useState(false);
   const { toast } = useToast();
   const { addMessage } = useChat();
 
@@ -53,28 +54,55 @@ export function StandupComedy() {
   const toggleRecording = async () => {
     if (!isRecording) {
       try {
-        await audioRecorder.startRecording();
-        setIsRecording(true);
-        setStep("recording");
-        toast({
-          title: "Recording Started",
-          description: "Perform your joke now! Click the mic button again to stop.",
-        });
+        if (useSimulation) {
+          setIsRecording(true);
+          setStep("recording");
+          toast({
+            title: "Simulation Mode",
+            description: "Simulating recording in demo mode.",
+          });
+        } else {
+          await audioRecorder.startRecording();
+          setIsRecording(true);
+          setStep("recording");
+          toast({
+            title: "Recording Started",
+            description: "Perform your joke now! Click the mic button again to stop.",
+          });
+        }
       } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Failed to start recording";
+        
         toast({
           title: "Recording Error",
-          description: error instanceof Error ? error.message : "Failed to start recording",
+          description: errorMessage,
           variant: "destructive",
         });
+        
+        // If permission was denied, offer simulation mode
+        if (errorMessage.includes("access denied") || errorMessage.includes("Permission denied")) {
+          toast({
+            title: "Using Simulation Mode",
+            description: "We'll use simulation mode since microphone access was denied.",
+          });
+          setUseSimulation(true);
+        }
       }
     } else {
       try {
-        const blob = await audioRecorder.stopRecording();
+        let blob: Blob;
+        
+        if (useSimulation) {
+          blob = await audioRecorder.simulateRecording();
+        } else {
+          blob = await audioRecorder.stopRecording();
+        }
+        
         setAudioBlob(blob);
         setIsRecording(false);
         toast({
           title: "Recording Saved",
-          description: "Your performance has been recorded!",
+          description: useSimulation ? "Simulation completed!" : "Your performance has been recorded!",
         });
       } catch (error) {
         toast({
@@ -223,6 +251,12 @@ export function StandupComedy() {
           <p className="text-sm text-muted-foreground mt-2">
             {step === "input" ? "Generating joke..." : "Analyzing performance..."}
           </p>
+        </div>
+      )}
+      
+      {useSimulation && (
+        <div className="text-xs text-muted-foreground mt-2 p-2 border border-yellow-200 bg-yellow-50 dark:bg-yellow-950/20 dark:border-yellow-800/50 rounded">
+          Running in simulation mode. For the full experience, please enable microphone access in your browser settings.
         </div>
       )}
     </div>
