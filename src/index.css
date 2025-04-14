@@ -1,13 +1,11 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -16,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 221.2 83.2% 53.3%;
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -33,9 +31,9 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --ring: 222.2 84% 4.9%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -48,7 +46,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -65,203 +63,143 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --ring: 212.7 26.8% 83.9%;
   }
+}
 
-  /* Theme: Calm Blue */
-  .theme-calm-blue {
-    --background: 210 50% 98%;
-    --foreground: 224 71% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-  }
+/* Theme classes */
+.theme-calm-blue {
+  --background: 210 50% 98%;
+  --foreground: 222.2 84% 4.9%;
+  --model1: 199 89% 48%;
+  --model2: 262 83% 58%;
+  --model3: 291 64% 42%;
+}
 
-  /* Theme: Midnight Noir */
-  .theme-midnight-noir {
-    --background: 230 30% 17%;
-    --foreground: 210 40% 98%;
-    --card: 230 30% 13%;
-    --card-foreground: 210 40% 98%;
-    --popover: 230 30% 13%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 230 15% 30%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 230 30% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 230 30% 25%;
-    --muted-foreground: 210 40% 80%;
-    --accent: 230 30% 25%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 230 30% 25%;
-    --input: 230 30% 25%;
-    --ring: 230 15% 40%;
-  }
+.theme-midnight-noir {
+  --background: 220 40% 8%;
+  --foreground: 210 40% 98%;
+  --model1: 199 69% 38%;
+  --model2: 262 63% 48%;
+  --model3: 291 74% 32%;
+}
 
-  /* Theme: Retro Terminal */
-  .theme-retro-terminal {
-    --background: 120 14% 10%;
-    --foreground: 120 100% 82%;
-    --card: 120 14% 13%;
-    --card-foreground: 120 100% 82%;
-    --popover: 120 14% 13%;
-    --popover-foreground: 120 100% 82%;
-    --primary: 120 100% 35%;
-    --primary-foreground: 120 14% 10%;
-    --secondary: 120 14% 20%;
-    --secondary-foreground: 120 100% 82%;
-    --muted: 120 14% 20%;
-    --muted-foreground: 120 100% 65%;
-    --accent: 120 14% 20%;
-    --accent-foreground: 120 100% 82%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 120 14% 10%;
-    --border: 120 14% 25%;
-    --input: 120 14% 25%;
-    --ring: 120 100% 35%;
-  }
+.theme-retro-terminal {
+  --background: 120 100% 4%;
+  --foreground: 120 100% 88%;
+  --card: 120 30% 12%;
+  --model1: 120 100% 36%;
+  --model2: 160 100% 36%;
+  --model3: 280 80% 65%;
+}
 
-  /* Theme: Futuristic Neon */
-  .theme-futuristic-neon {
-    --background: 260 20% 10%;
-    --foreground: 0 0% 100%;
-    --card: 260 20% 12%;
-    --card-foreground: 0 0% 100%;
-    --popover: 260 20% 12%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 300 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 100% 50%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 260 20% 15%;
-    --muted-foreground: 0 0% 75%;
-    --accent: 330 100% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 260 20% 30%;
-    --input: 260 20% 20%;
-    --ring: 300 100% 50%;
-  }
+.theme-futuristic-neon {
+  --background: 240 60% 10%;
+  --foreground: 210 40% 98%;
+  --model1: 180 100% 55%;
+  --model2: 325 100% 60%;
+  --model3: 280 100% 65%;
+}
 
-  /* Theme: Forest Green */
-  .theme-forest-green {
-    --background: 120 15% 95%;
-    --foreground: 120 50% 15%;
-    --card: 120 15% 100%;
-    --card-foreground: 120 50% 15%;
-    --popover: 120 15% 100%;
-    --popover-foreground: 120 50% 15%;
-    --primary: 120 40% 35%;
-    --primary-foreground: 120 15% 95%;
-    --secondary: 120 15% 90%;
-    --secondary-foreground: 120 50% 25%;
-    --muted: 120 15% 90%;
-    --muted-foreground: 120 50% 40%;
-    --accent: 120 15% 90%;
-    --accent-foreground: 120 50% 25%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 120 15% 95%;
-    --border: 120 15% 85%;
-    --input: 120 15% 85%;
-    --ring: 120 40% 35%;
-  }
+.theme-forest-green {
+  --background: 120 30% 96%;
+  --foreground: 120 80% 10%;
+  --model1: 120 60% 40%;
+  --model2: 160 60% 40%;
+  --model3: 300 60% 40%;
+}
 
-  /* Theme: Soft Pastels */
-  .theme-soft-pastels {
-    --background: 320 20% 97%;
-    --foreground: 320 30% 20%;
-    --card: 320 20% 100%;
-    --card-foreground: 320 30% 20%;
-    --popover: 320 20% 100%;
-    --popover-foreground: 320 30% 20%;
-    --primary: 320 80% 75%;
-    --primary-foreground: 320 30% 20%;
-    --secondary: 200 80% 85%;
-    --secondary-foreground: 320 30% 20%;
-    --muted: 320 20% 92%;
-    --muted-foreground: 320 30% 40%;
-    --accent: 140 80% 85%;
-    --accent-foreground: 320 30% 20%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 320 20% 97%;
-    --border: 320 20% 90%;
-    --input: 320 20% 90%;
-    --ring: 320 80% 75%;
-  }
+.theme-soft-pastels {
+  --background: 340 30% 96%;
+  --foreground: 340 60% 20%;
+  --model1: 340 80% 75%;
+  --model2: 180 60% 75%;
+  --model3: 280 60% 75%;
+}
 
-  /* Theme: Minimal Light */
-  .theme-minimal-light {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 0 0% 15%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 95%;
-    --accent-foreground: 0 0% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 15%;
-  }
+.theme-minimal-light {
+  --background: 0 0% 98%;
+  --foreground: 0 0% 12%;
+  --model1: 0 0% 50%;
+  --model2: 0 0% 40%;
+  --model3: 270 50% 60%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground font-sans;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-semibold;
+    @apply bg-background text-foreground;
   }
 }
 
-@layer components {
-  .glass-card {
-    @apply bg-white/20 backdrop-blur-lg border border-white/30 shadow-lg rounded-2xl;
+/* Crystal Ball Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
   }
-  
-  .crystal-glow {
-    @apply before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-tr before:from-purple-500/30 before:to-blue-300/30 before:blur-xl before:animate-pulse-glow;
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+    opacity: 1;
   }
-  
-  .input-glow {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300;
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
   }
-  
-  .custom-scrollbar {
-    @apply scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent hover:scrollbar-thumb-primary/40;
-  }
+}
 
-  .sparkle {
-    @apply absolute w-1 h-1 rounded-full bg-white animate-sparkle;
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px 5px rgba(138, 43, 226, 0.2);
   }
+  50% {
+    box-shadow: 0 0 30px 10px rgba(138, 43, 226, 0.4);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-rotate {
+  animation: rotate 20s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.sparkle {
+  @apply absolute bg-white rounded-full;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Input styling */
+.input-glow:focus {
+  box-shadow: 0 0 15px 2px rgba(138, 43, 226, 0.3);
+  border-color: rgba(138, 43, 226, 0.5);
+}
+
+/* Model background colors from CSS variables */
+.bg-model1 {
+  background-color: hsl(var(--model1));
+}
+
+.bg-model2 {
+  background-color: hsl(var(--model2));
+}
+
+.bg-model3 {
+  background-color: hsl(var(--model3));
 }

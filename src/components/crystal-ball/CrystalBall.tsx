@@ -4,9 +4,15 @@ import { useChat } from "../../context/ChatContext";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import { Image, Sparkles, Wand2 } from "lucide-react";
+import { Image, Sparkles, Wand2, Zap, Music, Calendar } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { DatePicker } from "@/components/ui/date-picker";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { zodiacSigns, generateFortune, generateImagePrompt } from "@/utils/fortuneTeller";
 
 interface Sparkle {
   id: number;
@@ -25,6 +31,12 @@ export function CrystalBall() {
   const [mysteryLevel, setMysteryLevel] = useState(5);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const { toast } = useToast();
+  
+  // Fortune teller inputs
+  const [selectedSign, setSelectedSign] = useState<string>("");
+  const [birthdate, setBirthdate] = useState<Date | null>(null);
+  const [spotifyLink, setSpotifyLink] = useState<string>("");
+  const [karmaReset, setKarmaReset] = useState<boolean>(false);
   
   // Generate random sparkles
   useEffect(() => {
@@ -67,6 +79,12 @@ export function CrystalBall() {
   const generateImage = () => {
     setGeneratingImage(true);
     
+    // Get image prompt based on selected sign and mysteryLevel
+    const imagePrompt = generateImagePrompt(
+      selectedSign || zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)].id,
+      mysteryLevel > 5 ? "surreal" : "serene"
+    );
+    
     // Simulate image generation (in real app would call an API)
     setTimeout(() => {
       // Generate a random placeholder image based on the mystery level
@@ -83,6 +101,24 @@ export function CrystalBall() {
       });
     }, 2000);
   };
+
+  const tellFortune = () => {
+    // Generate fortune based on inputs
+    const fortune = generateFortune(
+      selectedSign || zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)].id,
+      birthdate,
+      spotifyLink ? "energetic party vibes" : "", // Mock spotify analysis
+      karmaReset
+    );
+    
+    // Send the fortune to the chat
+    addMessage(fortune, "user", "model3");
+    
+    toast({
+      title: "Fortune Revealed",
+      description: "The crystal ball has spoken!",
+    });
+  };
   
   if (currentChat?.model !== "model3") {
     return null;
@@ -97,6 +133,7 @@ export function CrystalBall() {
                       ${isAnimating ? 'animate-pulse-glow' : ''}
                       before:content-[''] before:absolute before:inset-4 before:rounded-full before:bg-gradient-to-tr
                       before:from-purple-500/30 before:to-blue-300/10 before:backdrop-blur-lg`}
+          onClick={tellFortune}
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/5 to-blue-300/5 animate-rotate"></div>
           
@@ -131,9 +168,66 @@ export function CrystalBall() {
         
         {/* Mystical text */}
         <div className="absolute -bottom-8 text-center text-sm font-medium text-purple-500">
-          {isAnimating ? "Reading the cosmic energy..." : "Crystal Ball"}
+          {isAnimating ? "Reading the cosmic energy..." : "Tap the Crystal Ball for a Fortune"}
         </div>
       </div>
+      
+      {/* Fortune inputs */}
+      <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30">
+        <h3 className="text-center text-lg font-medium mb-3 text-purple-300">Your Cosmic Details</h3>
+        
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="zodiac-sign">Zodiac Sign</Label>
+            <Select value={selectedSign} onValueChange={setSelectedSign}>
+              <SelectTrigger id="zodiac-sign">
+                <SelectValue placeholder="Select your sign" />
+              </SelectTrigger>
+              <SelectContent>
+                {zodiacSigns.map((sign) => (
+                  <SelectItem key={sign.id} value={sign.id}>
+                    {sign.name} ({sign.dates})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="birthdate">Birth Date</Label>
+            <DatePicker 
+              date={birthdate} 
+              setDate={setBirthdate} 
+              className="w-full" 
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="spotify">
+              <div className="flex items-center gap-2">
+                <Music className="h-4 w-4" />
+                <span>Spotify Playlist Link (Optional)</span>
+              </div>
+            </Label>
+            <Input
+              id="spotify"
+              value={spotifyLink}
+              onChange={(e) => setSpotifyLink(e.target.value)}
+              placeholder="https://open.spotify.com/playlist/..."
+              className="bg-purple-950/30"
+            />
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="karma-reset"
+              checked={karmaReset}
+              onCheckedChange={setKarmaReset}
+            />
+            <Label htmlFor="karma-reset">Karma Reset (Get Wholesome Fortune)</Label>
+          </div>
+        </div>
+      </Card>
       
       {/* Prediction display */}
       <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30">
@@ -147,6 +241,16 @@ export function CrystalBall() {
         ) : (
           <p className="text-center italic text-sm">{prediction || "Ask a question to reveal your fortune..."}</p>
         )}
+        
+        <div className="flex justify-center mt-4">
+          <Button
+            onClick={tellFortune}
+            className="bg-purple-600 hover:bg-purple-700"
+          >
+            <Zap className="h-4 w-4 mr-2" />
+            Reveal My Fortune
+          </Button>
+        </div>
       </Card>
       
       {/* Image generation section */}

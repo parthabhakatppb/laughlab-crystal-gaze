@@ -1,6 +1,6 @@
-
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { ModelType } from "./ModelContext";
+import { generateFortune } from "../utils/fortuneTeller";
 
 export interface Message {
   id: string;
@@ -135,16 +135,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         } else if (model === "model2") {
           responseContent = "Yes, and... let's add a surprise twist! How about the character suddenly reveals they've been a ghost all along?";
         } else if (model === "model3") {
-          // Enhanced mystical fortune response
-          const fortunes = [
-            "✨ The crystal ball reveals a future filled with laughter and unexpected opportunities. Mercury retrograde suggests avoiding karaoke for now! ✨",
-            "✨ The stars align in your favor this week. Your lucky numbers are 7, 13, and whatever you were just thinking of. Cosmic coincidence? I think not! ✨",
-            "✨ A mysterious stranger will enter your life soon. They'll probably ask for directions and then leave, but still, mysterious! ✨",
-            "✨ Your aura is showing signs of needing more pizza in your life. The cosmic energies strongly suggest ordering delivery tonight. ✨",
-            "✨ The planetary alignment suggests you should finally watch that show everyone's been recommending. The universe has spoken! ✨",
-            "✨ I sense a great fortune in your future... or possibly just decent luck at a reasonable price. Cosmic inflation is real. ✨"
-          ];
-          responseContent = fortunes[Math.floor(Math.random() * fortunes.length)];
+          // Enhanced mystical fortune response - now using our fortune generator
+          responseContent = generateFortune(
+            "", // Let it pick a random sign if not specified in the message
+            null, 
+            "",
+            Math.random() > 0.9 // Occasionally give wholesome responses
+          );
         }
         
         const aiResponse: Message = {
