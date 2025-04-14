@@ -1,4 +1,3 @@
-
 import { useModel, ModelType } from "../../context/ModelContext";
 import { useChat } from "../../context/ChatContext";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ const getModelIcon = (iconName: string) => {
     case "MicVocal":
       return <MicVocal className="h-5 w-5" />;
     case "TheatreIcon":
+    case "Theater":
       return <Theater className="h-5 w-5" />;
     case "Sparkles":
       return <Sparkles className="h-5 w-5" />;

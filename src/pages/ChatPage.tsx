@@ -7,6 +7,7 @@ import { ChatList } from "../components/chat/ChatList";
 import { ChatHistory } from "../components/chat/ChatHistory";
 import { ChatInput } from "../components/chat/ChatInput";
 import { CrystalBall } from "../components/crystal-ball/CrystalBall";
+import { StandupComedy } from "../components/comedy/StandupComedy";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
@@ -32,6 +33,7 @@ export default function ChatPage() {
         <div className="flex flex-col border rounded-lg overflow-hidden bg-card">
           <ModelSwitcher />
           
+          {currentModel === "model2" && <StandupComedy />}
           {currentModel === "model3" && <CrystalBall />}
           
           <ChatHistory />

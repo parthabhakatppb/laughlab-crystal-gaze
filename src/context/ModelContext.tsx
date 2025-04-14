@@ -30,7 +30,7 @@ const modelDetails: Record<ModelType, ModelInfo> = {
     id: "model2",
     name: "Improv Buddy",
     description: "Create comedic scenes with this improv companion",
-    icon: "TheatreIcon", // This is fine in the context data as it's just a string identifier
+    icon: "Theater", // Corrected to match the Lucide React export name
     color: "bg-model2",
   },
   model3: {
