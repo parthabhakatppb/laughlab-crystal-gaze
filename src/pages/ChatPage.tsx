@@ -24,6 +24,12 @@ export default function ChatPage() {
     }
   }, [chats.length, createChat, currentModel]);
   
+  // Determine whether to show the ChatInput component
+  const showDefaultChatInput = !currentModel || 
+    (currentModel !== "model1" && 
+     currentModel !== "model2" && 
+     currentModel !== "model3");
+  
   return (
     <MainLayout>
       <div className="grid md:grid-cols-[300px_1fr] gap-4 h-[calc(100vh-132px)]">
@@ -40,7 +46,7 @@ export default function ChatPage() {
           
           <ChatHistory />
           
-          <ChatInput />
+          {showDefaultChatInput && <ChatInput />}
         </div>
       </div>
       

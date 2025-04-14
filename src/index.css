@@ -203,3 +203,49 @@
 .bg-model3 {
   background-color: hsl(var(--model3));
 }
+
+/* Hover effects for interactive elements */
+.hover-glow {
+  transition: all 0.3s ease-in-out;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px 5px rgba(138, 43, 226, 0.3);
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-border {
+  transition: border-color 0.3s ease-in-out;
+}
+
+.hover-border:hover {
+  border-color: rgba(138, 43, 226, 0.5);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(138, 43, 226, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(138, 43, 226, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(138, 43, 226, 0.4);
+}

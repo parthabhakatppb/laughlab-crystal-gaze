@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { zodiacSigns, generateFortune, generateImagePrompt } from "@/utils/fortuneTeller";
 
 interface Sparkle {
@@ -127,65 +128,82 @@ export function CrystalBall() {
   return (
     <div className="flex flex-col items-center py-4 space-y-6">
       {/* Crystal Ball */}
-      <div className="relative w-full flex justify-center items-center py-6">
-        <div 
-          className={`relative w-40 h-40 rounded-full bg-gradient-to-br from-purple-300/30 to-blue-300/30 backdrop-blur-md overflow-hidden
-                      ${isAnimating ? 'animate-pulse-glow' : ''}
-                      before:content-[''] before:absolute before:inset-4 before:rounded-full before:bg-gradient-to-tr
-                      before:from-purple-500/30 before:to-blue-300/10 before:backdrop-blur-lg`}
-          onClick={tellFortune}
-        >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/5 to-blue-300/5 animate-rotate"></div>
-          
-          {/* Inner glow */}
+      <HoverCard>
+        <HoverCardTrigger asChild>
           <div 
-            className={`absolute inset-8 rounded-full bg-white/10 backdrop-blur-sm
-                      ${isAnimating ? 'animate-pulse' : ''}`}
-          ></div>
-          
-          {/* Sparkles */}
-          {sparkles.map((sparkle) => (
-            <div
-              key={sparkle.id}
-              className="sparkle"
-              style={{
-                top: sparkle.top,
-                left: sparkle.left,
-                width: sparkle.size,
-                height: sparkle.size,
-                animationDelay: sparkle.delay,
-                opacity: isAnimating ? 1 : 0.2
-              }}
-            ></div>
-          ))}
-        </div>
-        
-        {/* Stars around the crystal ball */}
-        <div className={`absolute top-0 left-1/4 text-xl ${isAnimating ? 'animate-float' : ''}`}>✨</div>
-        <div className={`absolute bottom-0 right-1/4 text-xl ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '0.5s' }}>✨</div>
-        <div className={`absolute top-1/3 right-1/4 text-lg ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '1s' }}>⭐</div>
-        <div className={`absolute bottom-1/3 left-1/3 text-lg ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '1.5s' }}>⭐</div>
-        
-        {/* Mystical text */}
-        <div className="absolute -bottom-8 text-center text-sm font-medium text-purple-500">
-          {isAnimating ? "Reading the cosmic energy..." : "Tap the Crystal Ball for a Fortune"}
-        </div>
-      </div>
+            className="relative w-full flex justify-center items-center py-6 cursor-pointer transition-transform hover:scale-105"
+            onClick={tellFortune}
+          >
+            <div 
+              className={`relative w-40 h-40 rounded-full bg-gradient-to-br from-purple-300/30 to-blue-300/30 backdrop-blur-md overflow-hidden
+                        ${isAnimating ? 'animate-pulse-glow' : ''}
+                        before:content-[''] before:absolute before:inset-4 before:rounded-full before:bg-gradient-to-tr
+                        before:from-purple-500/30 before:to-blue-300/10 before:backdrop-blur-lg
+                        transition-all duration-300 hover:shadow-[0_0_30px_10px_rgba(138,43,226,0.4)]`}
+            >
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-500/5 to-blue-300/5 animate-rotate"></div>
+              
+              {/* Inner glow */}
+              <div 
+                className={`absolute inset-8 rounded-full bg-white/10 backdrop-blur-sm
+                          ${isAnimating ? 'animate-pulse' : ''}`}
+              ></div>
+              
+              {/* Sparkles */}
+              {sparkles.map((sparkle) => (
+                <div
+                  key={sparkle.id}
+                  className="sparkle"
+                  style={{
+                    top: sparkle.top,
+                    left: sparkle.left,
+                    width: sparkle.size,
+                    height: sparkle.size,
+                    animationDelay: sparkle.delay,
+                    opacity: isAnimating ? 1 : 0.2
+                  }}
+                ></div>
+              ))}
+            </div>
+            
+            {/* Stars around the crystal ball */}
+            <div className={`absolute top-0 left-1/4 text-xl ${isAnimating ? 'animate-float' : ''}`}>✨</div>
+            <div className={`absolute bottom-0 right-1/4 text-xl ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '0.5s' }}>✨</div>
+            <div className={`absolute top-1/3 right-1/4 text-lg ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '1s' }}>⭐</div>
+            <div className={`absolute bottom-1/3 left-1/3 text-lg ${isAnimating ? 'animate-float' : ''}`} style={{ animationDelay: '1.5s' }}>⭐</div>
+            
+            {/* Mystical text */}
+            <div className="absolute -bottom-8 text-center text-sm font-medium text-purple-500">
+              {isAnimating ? "Reading the cosmic energy..." : "Tap the Crystal Ball for a Fortune"}
+            </div>
+          </div>
+        </HoverCardTrigger>
+        <HoverCardContent className="bg-purple-950/80 backdrop-blur-md border-purple-500/50 text-purple-100">
+          <p className="text-sm">Peer into the depths of the cosmic realm and discover your fortune. Click to reveal your mystical future.</p>
+        </HoverCardContent>
+      </HoverCard>
       
       {/* Fortune inputs */}
-      <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30">
+      <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(138,43,226,0.3)] hover:border-purple-300/50">
         <h3 className="text-center text-lg font-medium mb-3 text-purple-300">Your Cosmic Details</h3>
         
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="zodiac-sign">Zodiac Sign</Label>
+            <Label htmlFor="zodiac-sign" className="group transition-all duration-300 hover:text-purple-400 flex items-center">
+              <span>Zodiac Sign</span>
+              <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">✨</div>
+            </Label>
             <Select value={selectedSign} onValueChange={setSelectedSign}>
-              <SelectTrigger id="zodiac-sign">
+              <SelectTrigger id="zodiac-sign" className="hover:border-purple-400 transition-colors duration-300">
                 <SelectValue placeholder="Select your sign" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-purple-950/90 backdrop-blur-md border-purple-500/50">
                 {zodiacSigns.map((sign) => (
-                  <SelectItem key={sign.id} value={sign.id}>
+                  <SelectItem 
+                    key={sign.id} 
+                    value={sign.id}
+                    className="hover:bg-purple-800/50 transition-colors duration-200"
+                  >
                     {sign.name} ({sign.dates})
                   </SelectItem>
                 ))}
@@ -194,43 +212,50 @@ export function CrystalBall() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="birthdate">Birth Date</Label>
+            <Label htmlFor="birthdate" className="group transition-all duration-300 hover:text-purple-400 flex items-center">
+              <span>Birth Date</span>
+              <div className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">🌟</div>
+            </Label>
             <DatePicker 
               date={birthdate} 
               setDate={setBirthdate} 
-              className="w-full" 
+              className="w-full hover:border-purple-400 transition-colors duration-300" 
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="spotify">
-              <div className="flex items-center gap-2">
-                <Music className="h-4 w-4" />
-                <span>Spotify Playlist Link (Optional)</span>
-              </div>
+            <Label htmlFor="spotify" className="group transition-all duration-300 hover:text-purple-400 flex items-center">
+              <Music className="h-4 w-4 mr-2 group-hover:text-pink-400 transition-colors duration-300" />
+              <span>Spotify Playlist Link (Optional)</span>
             </Label>
             <Input
               id="spotify"
               value={spotifyLink}
               onChange={(e) => setSpotifyLink(e.target.value)}
               placeholder="https://open.spotify.com/playlist/..."
-              className="bg-purple-950/30"
+              className="bg-purple-950/30 hover:border-purple-400 focus:border-purple-400 transition-colors duration-300"
             />
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 group hover:bg-purple-900/20 p-2 rounded-md transition-colors duration-300">
             <Switch
               id="karma-reset"
               checked={karmaReset}
               onCheckedChange={setKarmaReset}
+              className="data-[state=checked]:bg-purple-600"
             />
-            <Label htmlFor="karma-reset">Karma Reset (Get Wholesome Fortune)</Label>
+            <Label 
+              htmlFor="karma-reset" 
+              className="cursor-pointer group-hover:text-purple-400 transition-colors duration-300"
+            >
+              Karma Reset (Get Wholesome Fortune)
+            </Label>
           </div>
         </div>
       </Card>
       
       {/* Prediction display */}
-      <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30">
+      <Card className="w-full p-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20 border-purple-300/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(138,43,226,0.3)] hover:border-purple-300/50">
         <h3 className="text-center text-lg font-medium mb-2 text-purple-300">Your Mystical Fortune</h3>
         {isLoading ? (
           <div className="space-y-2">
@@ -239,13 +264,13 @@ export function CrystalBall() {
             <Skeleton className="h-4 w-5/6 bg-purple-300/10" />
           </div>
         ) : (
-          <p className="text-center italic text-sm">{prediction || "Ask a question to reveal your fortune..."}</p>
+          <p className="text-center italic text-sm hover:text-purple-200 transition-colors duration-300">{prediction || "Ask a question to reveal your fortune..."}</p>
         )}
         
         <div className="flex justify-center mt-4">
           <Button
             onClick={tellFortune}
-            className="bg-purple-600 hover:bg-purple-700"
+            className="bg-purple-600 hover:bg-purple-700 hover:shadow-[0_0_10px_rgba(138,43,226,0.5)] transition-all duration-300"
           >
             <Zap className="h-4 w-4 mr-2" />
             Reveal My Fortune
@@ -254,21 +279,28 @@ export function CrystalBall() {
       </Card>
       
       {/* Image generation section */}
-      <Card className="w-full p-4 bg-gradient-to-r from-indigo-900/20 to-pink-900/20 border-indigo-300/30">
+      <Card className="w-full p-4 bg-gradient-to-r from-indigo-900/20 to-pink-900/20 border-indigo-300/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:border-indigo-300/50">
         <div className="flex flex-col items-center space-y-4">
-          <h3 className="text-center text-lg font-medium text-indigo-300">Mystical Image Generator</h3>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <h3 className="text-center text-lg font-medium text-indigo-300 cursor-help">Mystical Image Generator</h3>
+            </HoverCardTrigger>
+            <HoverCardContent className="bg-indigo-950/80 backdrop-blur-md border-indigo-500/50 text-indigo-100">
+              <p className="text-sm">Generate a mystical image based on your cosmic energy. The higher the mystery level, the more abstract the image will be.</p>
+            </HoverCardContent>
+          </HoverCard>
           
           <div className="w-full space-y-2">
             <div className="flex justify-between text-xs text-muted-foreground">
-              <span>Less mystical</span>
-              <span>More mystical</span>
+              <span className="hover:text-indigo-300 transition-colors duration-300">Less mystical</span>
+              <span className="hover:text-indigo-300 transition-colors duration-300">More mystical</span>
             </div>
             <Slider
               value={[mysteryLevel]}
               min={1}
               max={10}
               step={1}
-              className="w-full"
+              className="w-full hover:opacity-80"
               onValueChange={(value) => setMysteryLevel(value[0])}
             />
           </div>
@@ -276,7 +308,7 @@ export function CrystalBall() {
           <Button
             variant="outline"
             size="sm"
-            className="bg-indigo-500/20 hover:bg-indigo-500/30 border-indigo-400/30"
+            className="bg-indigo-500/20 hover:bg-indigo-500/30 border-indigo-400/30 hover:shadow-[0_0_10px_rgba(99,102,241,0.5)] transition-all duration-300"
             onClick={generateImage}
             disabled={generatingImage}
           >
@@ -295,7 +327,7 @@ export function CrystalBall() {
           
           {imageSrc && (
             <div className="w-full mt-4 flex justify-center">
-              <div className="relative max-w-xs overflow-hidden rounded-lg border border-indigo-400/30 shadow-lg">
+              <div className="relative max-w-xs overflow-hidden rounded-lg border border-indigo-400/30 shadow-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] hover:scale-105">
                 <img src={imageSrc} alt="Mystical vision" className="w-full h-auto" />
                 <div className="absolute inset-0 bg-gradient-to-t from-purple-900/30 to-transparent pointer-events-none"></div>
               </div>
